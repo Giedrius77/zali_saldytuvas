@@ -1,5 +1,7 @@
 # zaliu saldytuvas panaudojant class ir kitus budus!!!
 
+import json
+
 class Product:
     def __init__(self, name, quantity, **kwargs):
         self.name = name
@@ -33,7 +35,24 @@ class Recipe:
 
 
 class Fridge:
-    contents = []
+    def __init__(self):
+        self.contents = []
+        with open('zaliu_fridge.json', 'r', encoding='utf-8') as fridge_file:
+            contents = json.load(fridge_file)
+        if contents and len(contents) > 0:
+            for product_dict in contents:
+                self.contents.append(Product(product_dict['name'], product_dict['quantity'])) # , product_dict['unit of measurement'] - isimta
+
+    def save(self):
+        with open('zaliu_fridge.json', 'w', encoding='utf-8') as fridge_file:
+            contents = []
+            for product in self.contents:
+                contents.append({
+                    'name': product.name,
+                    'quantity': product.quantity,
+                    #'unit of measurement': product.unit_of_measurement
+                })
+            json.dump(contents, fridge_file)
 
     def check_product(self, product_name):
         for product_id,product in enumerate(self.contents):
