@@ -34,7 +34,7 @@ class Recipe:
         self.ingredients.pop(ingredient_id)
 
 
-class Fridge:
+class Fridge: # budas kaip produktus idetus i fridge permesti i json faila 38-54 eilutes
     def __init__(self):
         self.contents = []
         with open('zaliu_fridge.json', 'r', encoding='utf-8') as fridge_file:
@@ -49,8 +49,7 @@ class Fridge:
             for product in self.contents:
                 contents.append({
                     'name': product.name,
-                    'quantity': product.quantity,
-                    #'unit of measurement': product.unit_of_measurement
+                    'quantity': product.quantity, #'unit of measurement': product.unit_of_measurement - pasilintas, nes nenaudojama
                 })
             json.dump(contents, fridge_file)
 
@@ -72,7 +71,7 @@ class Fridge:
         if product is not None:
             product.quantity += quantity
         else:
-            self.contents.append(Product(name,quantity))
+            self.contents.append(Product(name, quantity))
 
     def remove_product(self, name:str, quantity:float):
         product_id, product = self.check_product(name)
@@ -112,7 +111,8 @@ def main():
 6: create recipe\n7: change product quantity in recipe
 8: remove product from recipe\n9: peek recipe""")
         choice = input("Choose a number: ")
-        if choice.startswith('0'):
+        if choice.startswith('0'):        
+            fridge.save() # butinai reikia dadeti sia eilute kad aktyvuoti 46 eilute: def save(self):
             break
         elif choice.startswith('1'):
             name = input("Product: ")
