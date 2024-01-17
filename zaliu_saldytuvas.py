@@ -1,3 +1,6 @@
+# pasidaryti si koda su .json isvestimi pagal zaliu_fridge.py
+import json
+
 def prideti_produkta(saldytuve, produktas, kiekis):
     if produktas in saldytuve:
         saldytuve[produktas] += kiekis
